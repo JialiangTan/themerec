@@ -18,7 +18,13 @@
     "commands": [
       {
         "command": "themerec.helloWorld",
-        "title": "Hello World"
+        "title": "Hello World",
+        "category": "Themerec"
+      },
+      {
+        "command": "themerec.welcome",
+        "title": "Welcome",
+        "category": "Themerec"
       }
     ]
   },
