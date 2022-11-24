@@ -50,7 +50,7 @@ function activate(context) {
     });
     context.subscriptions.push(disposable);
     context.subscriptions.push(vscode.commands.registerCommand('themerec.welcome', () => {
-        vscode.window.showInformationMessage('Wwwww');
+        vscode.window.showInformationMessage('welcome command is alive!');
     }));
     // rand by click
     // if (vscode.workspace.workspaceFolders) {

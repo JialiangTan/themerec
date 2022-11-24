@@ -63,7 +63,7 @@ export function activate(context: vscode.ExtensionContext) {
 	
 	context.subscriptions.push(
 		vscode.commands.registerCommand('themerec.welcome', () => {
-			vscode.window.showInformationMessage('Wwwww');
+			vscode.window.showInformationMessage('welcome command is alive!');
 		})
 	);
 
