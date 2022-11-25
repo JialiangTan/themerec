@@ -6,6 +6,8 @@ import { privateEncrypt } from 'crypto';
 import * as fs from 'fs';
 const { performance } = require('perf_hooks');
 
+let myStatusBarItem: vscode.StatusBarItem;
+
 async function fileExist(fileUri: vscode.Uri) {
 	try {
 		await vscode.workspace.fs.stat(fileUri);
@@ -31,16 +33,15 @@ export function activate(context: vscode.ExtensionContext) {
 	
 	console.log('Congratulations, your extension "themeRec" is now active!');
 
-	let disposable = vscode.commands.registerCommand('themerec.helloWorld', () => {
+	const randCommand = 'themerec.helloWorld';
+	let disposable = vscode.commands.registerCommand(randCommand, () => {
 		// vscode.window.showInformationMessage('Roll a dice?', 'Try', 'Pass').then(selection => {});
 		
 		// default button
-		// status bar trigger
 		// collect human response
-		// show theme name
 		// no repeated appearance
 		// like array
-		vscode.window.showInformationMessage('Roll a dice?');
+		// vscode.window.showInformationMessage('Roll a dice?');
 		let jsonUri = vscode.Uri.file('/Users/jialiangtan/Library/ApplicationSupport/Code/User/settings.json');
 		
 		vscode.workspace.openTextDocument(jsonUri).then((document) => {
@@ -51,6 +52,7 @@ export function activate(context: vscode.ExtensionContext) {
 							"Solarized Light", "Default High Contrast", "Kimbie Dark"];
 			const random = Math.floor(Math.random() * themeName.length);
 			obj["workbench.colorTheme"] = themeName[random];
+			vscode.window.showInformationMessage('Current theme is: ' + themeName[random]);
 			// console.log("rand " + obj["workbench.colorTheme"]);
 			
 			var jsonContent = JSON.stringify(obj, null, 4);
@@ -60,12 +62,21 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(disposable);
 
-	
-	context.subscriptions.push(
-		vscode.commands.registerCommand('themerec.welcome', () => {
-			vscode.window.showInformationMessage('welcome command is alive!');
-		})
-	);
+	// create status bar item, rand theme by click jersey icon
+	myStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
+	myStatusBarItem.command = randCommand;
+	context.subscriptions.push(myStatusBarItem);
+
+	myStatusBarItem.text = '$(jersey)';
+	myStatusBarItem.show();
+
+
+	// context.subscriptions.push(
+	// 	vscode.commands.registerCommand(myCommand, () => {
+	// 		vscode.window.showInformationMessage('welcome command is alive!');
+	// 	})
+	// );
+
 
 	// rand by click
 	// if (vscode.workspace.workspaceFolders) {
@@ -128,6 +139,11 @@ export function activate(context: vscode.ExtensionContext) {
 	// }
 
 }
+
+// function updateStatusBarItem():void {
+// 	myStatusBarItem.text = 'xxx';
+// 	myStatusBarItem.show();
+// }
 
 export function deactivate() {}
 

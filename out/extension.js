@@ -4,6 +4,7 @@ exports.deactivate = exports.activate = void 0;
 const vscode = require("vscode");
 const util_1 = require("util");
 const { performance } = require('perf_hooks');
+let myStatusBarItem;
 async function fileExist(fileUri) {
     try {
         await vscode.workspace.fs.stat(fileUri);
@@ -25,15 +26,14 @@ async function readFile(fileUri) {
 }
 function activate(context) {
     console.log('Congratulations, your extension "themeRec" is now active!');
-    let disposable = vscode.commands.registerCommand('themerec.helloWorld', () => {
+    const randCommand = 'themerec.helloWorld';
+    let disposable = vscode.commands.registerCommand(randCommand, () => {
         // vscode.window.showInformationMessage('Roll a dice?', 'Try', 'Pass').then(selection => {});
         // default button
-        // status bar trigger
         // collect human response
-        // show theme name
         // no repeated appearance
         // like array
-        vscode.window.showInformationMessage('Roll a dice?');
+        // vscode.window.showInformationMessage('Roll a dice?');
         let jsonUri = vscode.Uri.file('/Users/jialiangtan/Library/ApplicationSupport/Code/User/settings.json');
         vscode.workspace.openTextDocument(jsonUri).then((document) => {
             let text = document.getText();
@@ -43,15 +43,24 @@ function activate(context) {
                 "Solarized Light", "Default High Contrast", "Kimbie Dark"];
             const random = Math.floor(Math.random() * themeName.length);
             obj["workbench.colorTheme"] = themeName[random];
+            vscode.window.showInformationMessage('Current theme is: ' + themeName[random]);
             // console.log("rand " + obj["workbench.colorTheme"]);
             var jsonContent = JSON.stringify(obj, null, 4);
             vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new util_1.TextEncoder().encode(jsonContent));
         });
     });
     context.subscriptions.push(disposable);
-    context.subscriptions.push(vscode.commands.registerCommand('themerec.welcome', () => {
-        vscode.window.showInformationMessage('welcome command is alive!');
-    }));
+    // create status bar item, rand theme by click jersey icon
+    myStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
+    myStatusBarItem.command = randCommand;
+    context.subscriptions.push(myStatusBarItem);
+    myStatusBarItem.text = '$(jersey)';
+    myStatusBarItem.show();
+    // context.subscriptions.push(
+    // 	vscode.commands.registerCommand(myCommand, () => {
+    // 		vscode.window.showInformationMessage('welcome command is alive!');
+    // 	})
+    // );
     // rand by click
     // if (vscode.workspace.workspaceFolders) {
     // 	vscode.window.showInformationMessage('Roll a dice?', 'Try', 'Pass').then(selection => {
@@ -101,6 +110,10 @@ function activate(context) {
     // }
 }
 exports.activate = activate;
+// function updateStatusBarItem():void {
+// 	myStatusBarItem.text = 'xxx';
+// 	myStatusBarItem.show();
+// }
 function deactivate() { }
 exports.deactivate = deactivate;
 //# sourceMappingURL=extension.js.map

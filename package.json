@@ -18,21 +18,21 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "package-explorer",
-          "title": "Package Explorer",
+          "id": "theme-explorer",
+          "title": "Theme Explorer",
           "icon": "resources/jersey.svg"
         }
       ]
     },
     "views": {
-      "package-explorer": [
+      "theme-explorer": [
         {
           "id": "package-dependencies",
-          "name": "Dependencies"
+          "name": "Favorate"
         },
         {
           "id": "package-outline",
-          "name": "Outline"
+          "name": "Recommended"
         }
       ]
     },
