@@ -11,6 +11,7 @@
   ],
   "activationEvents": [
     "onCommand:themerec.helloWorld",
+    "onCommand:themerec.default",
     "onStartupFinished"
   ],
   "main": "./out/extension.js",
@@ -43,8 +44,8 @@
         "category": "Themerec"
       },
       {
-        "command": "themerec.welcome",
-        "title": "Welcome",
+        "command": "themerec.default",
+        "title": "Default Theme",
         "category": "Themerec"
       }
     ]

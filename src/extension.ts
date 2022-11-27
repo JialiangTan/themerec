@@ -7,6 +7,7 @@ import * as fs from 'fs';
 const { performance } = require('perf_hooks');
 
 let myStatusBarItem: vscode.StatusBarItem;
+let myStatusBarItem2: vscode.StatusBarItem;
 
 async function fileExist(fileUri: vscode.Uri) {
 	try {
@@ -66,16 +67,35 @@ export function activate(context: vscode.ExtensionContext) {
 	myStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
 	myStatusBarItem.command = randCommand;
 	context.subscriptions.push(myStatusBarItem);
-
+	myStatusBarItem.tooltip = 'Random A Theme';
 	myStatusBarItem.text = '$(jersey)';
 	myStatusBarItem.show();
 
 
-	// context.subscriptions.push(
-	// 	vscode.commands.registerCommand(myCommand, () => {
-	// 		vscode.window.showInformationMessage('welcome command is alive!');
-	// 	})
-	// );
+	// change default dark theme
+	const defaultCommand = 'themerec.default';
+	context.subscriptions.push(
+		vscode.commands.registerCommand(defaultCommand, () => {
+			vscode.window.showInformationMessage('Default theme is on!');
+			let jsonUri = vscode.Uri.file('/Users/jialiangtan/Library/ApplicationSupport/Code/User/settings.json');
+			vscode.workspace.openTextDocument(jsonUri).then((document) => {
+				let text = document.getText();
+				let obj = JSON.parse(text);
+				const themeName = "Default Dark+";
+				obj["workbench.colorTheme"] = themeName;
+				
+				var jsonContent = JSON.stringify(obj, null, 4);
+				vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new TextEncoder().encode(jsonContent));
+			});
+		})
+	);
+	// create status bar item, apply default theme by click clock icon
+	myStatusBarItem2 = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
+	myStatusBarItem2.command = defaultCommand;
+	context.subscriptions.push(myStatusBarItem2);
+	myStatusBarItem2.tooltip = 'Use Default Dark+ Theme';
+	myStatusBarItem2.text = '$(clock)';
+	myStatusBarItem2.show();
 
 
 	// rand by click
