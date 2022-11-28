@@ -10,8 +10,9 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:themerec.helloWorld",
-    "onCommand:themerec.default",
+    "onCommand:themerec.randTheme",
+    "onCommand:themerec.defaultTheme",
+    "onCommand:themerec.likeTheme",
     "onStartupFinished"
   ],
   "main": "./out/extension.js",
@@ -39,13 +40,18 @@
     },
     "commands": [
       {
-        "command": "themerec.helloWorld",
-        "title": "Hello World",
+        "command": "themerec.randTheme",
+        "title": "Random Theme",
         "category": "Themerec"
       },
       {
-        "command": "themerec.default",
+        "command": "themerec.defaultTheme",
         "title": "Default Theme",
+        "category": "Themerec"
+      },
+      {
+        "command": "themerec.likeTheme",
+        "title": "Like Theme",
         "category": "Themerec"
       }
     ]

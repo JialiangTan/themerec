@@ -6,86 +6,111 @@ const util_1 = require("util");
 const { performance } = require('perf_hooks');
 let randItem;
 let defaultItem;
-async function fileExist(fileUri) {
-    try {
-        await vscode.workspace.fs.stat(fileUri);
-        return true;
-    }
-    catch {
-        return false;
-    }
-}
-async function readFile(fileUri) {
-    let exist = await fileExist(fileUri);
-    if (exist) {
-        let buffer = await vscode.workspace.fs.readFile(fileUri);
-        return new util_1.TextDecoder().decode(buffer);
-    }
-    else {
-        return "Coding events:";
-    }
-}
+let likeItem;
+let jsonUri = vscode.Uri.file('/Users/jialiangtan/Library/ApplicationSupport/Code/User/settings.json');
+let likeTheme = [];
+// async function fileExist(fileUri: vscode.Uri) {
+// 	try {
+// 		await vscode.workspace.fs.stat(fileUri);
+// 		return true;
+// 	} catch {
+// 		return false;
+// 	}	
+// }
+// async function readFile(fileUri: vscode.Uri) {
+// 	let exist = await fileExist(fileUri);
+// 	if (exist) {
+// 		let buffer = await vscode.workspace.fs.readFile(fileUri);
+// 		return new TextDecoder().decode(buffer);
+// 	} 
+// 	else {
+// 		return "Coding events:";
+// 	}
+// }
 function activate(context) {
     console.log('Congratulations, your extension "themeRec" is now active!');
-    const randCommand = 'themerec.helloWorld';
+    const randCommand = 'themerec.randTheme';
     let disposable = vscode.commands.registerCommand(randCommand, () => {
         // vscode.window.showInformationMessage('Roll a dice?', 'Try', 'Pass').then(selection => {});
         // collect human response
         // no repeated appearance
-        // like array
-        // vscode.window.showInformationMessage('Roll a dice?');
-        let jsonUri = vscode.Uri.file('/Users/jialiangtan/Library/ApplicationSupport/Code/User/settings.json');
         vscode.workspace.openTextDocument(jsonUri).then((document) => {
-            let text = document.getText();
-            let obj = JSON.parse(text);
-            const themeName = ["Abyss", "Atom One Dark", "Quiet Light", "Horizon", "Darcula",
-                "Solarized Dark", "Default Dark+", "Red", "Tomorrow Night Blue",
-                "Solarized Light", "Default High Contrast", "Kimbie Dark",
-                "Winter is Coming (Light)", "Winter is Coming (Dark Blue)", "Winter is Coming (Dark Black)",
-                "One Monokai", "Palenight Theme", "Palenight Theme", "Panda Syntax", "Eva Dark",
-                "Omni", "2077", "JellyFish", "Aura Dark", "Aura Soft Dark", "Tinacious Design",
-                "Blueberry dark theme", "Iceberg", "Cute", "merko's green theme",
-                "Luvia Theme", "1987", "Sublime Material Theme - Dark", "Nebula",
-                "Slack Theme Work Hard", "Slack Theme Dark Mode", "Slack Theme Aubergine Dark", "Slack Theme Monument",
-                "Gruvbox Dark Hard", "Gruvbox Dark Soft", "Gruvbox Dark Medium",
-                "Gruvbox Light Hard", "Gruvbox Light Soft", "Gruvbox Light Medium"];
+            let obj = JSON.parse(document.getText());
+            const themeName = ['Abyss', 'Atom One Dark', 'Quiet Light', 'Horizon", "Darcula',
+                'Solarized Dark', 'Default Dark+', 'Red', 'Tomorrow Night Blue',
+                'Solarized Light', 'Default High Contrast', 'Kimbie Dark',
+                'Winter is Coming (Light)', 'Winter is Coming (Dark Blue)', 'Winter is Coming (Dark Black)',
+                'One Monokai', 'Palenight Theme', 'Palenight Theme', 'Panda Syntax", "Eva Dark',
+                'Omni", "2077', 'JellyFish', 'Aura Dark', 'Aura Soft Dark', 'Tinacious Design',
+                'Blueberry dark theme', 'Iceberg', 'Cute', "merko's green theme",
+                'Luvia Theme', '1987', 'Sublime Material Theme - Dark', 'Nebula',
+                'Slack Theme Work Hard', 'Slack Theme Dark Mode', 'Slack Theme Aubergine Dark', 'Slack Theme Monument',
+                'Gruvbox Dark Hard', 'Gruvbox Dark Soft', 'Gruvbox Dark Medium',
+                'Gruvbox Light Hard', 'Gruvbox Light Soft', 'Gruvbox Light Medium'];
             const random = Math.floor(Math.random() * themeName.length);
             obj["workbench.colorTheme"] = themeName[random];
-            vscode.window.showInformationMessage('Current theme is: ' + themeName[random]);
-            // console.log("rand " + obj["workbench.colorTheme"]);
+            // vscode.window.showInformationMessage('Current theme is: ' + themeName[random]);
             var jsonContent = JSON.stringify(obj, null, 4);
             vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new util_1.TextEncoder().encode(jsonContent));
         });
     });
     context.subscriptions.push(disposable);
-    // create status bar item, rand theme by click jersey icon
+    // create status bar item, apply a random theme 
     randItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
     randItem.command = randCommand;
     context.subscriptions.push(randItem);
     randItem.tooltip = 'Random Theme';
-    randItem.text = '$(jersey)';
+    // randItem.text = '$(jersey)';
+    randItem.text = '$(refresh)';
     randItem.show();
     // change default dark theme
-    const defaultCommand = 'themerec.default';
+    const defaultCommand = 'themerec.defaultTheme';
     context.subscriptions.push(vscode.commands.registerCommand(defaultCommand, () => {
         vscode.window.showInformationMessage('Default theme is on!');
-        let jsonUri = vscode.Uri.file('/Users/jialiangtan/Library/ApplicationSupport/Code/User/settings.json');
         vscode.workspace.openTextDocument(jsonUri).then((document) => {
-            let text = document.getText();
-            let obj = JSON.parse(text);
-            const themeName = "Default Dark+";
+            let obj = JSON.parse(document.getText());
+            // const themeName = "Default Dark+";
+            const themeName = "Nebula";
             obj["workbench.colorTheme"] = themeName;
             var jsonContent = JSON.stringify(obj, null, 4);
             vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new util_1.TextEncoder().encode(jsonContent));
         });
     }));
-    // create status bar item, apply default theme by click clock icon
+    // create status bar item, apply default theme
     defaultItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
     defaultItem.command = defaultCommand;
     context.subscriptions.push(defaultItem);
-    defaultItem.tooltip = 'Use Default Dark+ Theme';
-    defaultItem.text = '$(clock)';
+    // defaultItem.tooltip = 'Use Default Dark+ Theme';
+    defaultItem.tooltip = 'Use Nebula';
+    defaultItem.text = '$(reply)';
     defaultItem.show();
+    // save current theme to likeTheme
+    const likeCommand = 'themerec.likeTheme';
+    context.subscriptions.push(vscode.commands.registerCommand(likeCommand, () => {
+        vscode.workspace.openTextDocument(jsonUri).then((document) => {
+            let obj = JSON.parse(document.getText());
+            const curTheme = obj["workbench.colorTheme"];
+            // vscode.window.showInformationMessage('Like theme: ' + themeName);
+            if (likeTheme.indexOf(curTheme) > -1) {
+                console.log("in");
+                console.log(likeTheme);
+                vscode.window.showInformationMessage('Already liked ' + curTheme);
+            }
+            else {
+                console.log("not in");
+                likeTheme.push(curTheme);
+                vscode.window.showInformationMessage('Like ' + curTheme);
+                console.log(likeTheme);
+            }
+        });
+    }));
+    // create status bar item, save current theme 
+    likeItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
+    likeItem.command = likeCommand;
+    context.subscriptions.push(likeItem);
+    likeItem.tooltip = 'Like this Theme';
+    likeItem.text = '$(heart)';
+    likeItem.show();
     // rand by click
     // if (vscode.workspace.workspaceFolders) {
     // 	vscode.window.showInformationMessage('Roll a dice?', 'Try', 'Pass').then(selection => {
