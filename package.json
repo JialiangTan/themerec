@@ -13,6 +13,7 @@
     "onCommand:themerec.randTheme",
     "onCommand:themerec.defaultTheme",
     "onCommand:themerec.likeTheme",
+    "onCommand:themerec.randLike",
     "onStartupFinished"
   ],
   "main": "./out/extension.js",
@@ -52,6 +53,11 @@
       {
         "command": "themerec.likeTheme",
         "title": "Like Theme",
+        "category": "Themerec"
+      },
+      {
+        "command": "themerec.randLike",
+        "title": "Random in Like",
         "category": "Themerec"
       }
     ]

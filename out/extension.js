@@ -7,6 +7,7 @@ const { performance } = require('perf_hooks');
 let randItem;
 let defaultItem;
 let likeItem;
+let randLikeItem;
 let jsonUri = vscode.Uri.file('/Users/jialiangtan/Library/ApplicationSupport/Code/User/settings.json');
 let likeTheme = [];
 let gthemeName = '';
@@ -70,12 +71,11 @@ function activate(context) {
     // change default dark theme
     const defaultCommand = 'themerec.defaultTheme';
     context.subscriptions.push(vscode.commands.registerCommand(defaultCommand, () => {
-        vscode.window.showInformationMessage('Default theme is on!');
+        // vscode.window.showInformationMessage('Use default theme');
         vscode.workspace.openTextDocument(jsonUri).then((document) => {
             let obj = JSON.parse(document.getText());
             // const themeName = "Default Dark+";
-            // const themeName = "Nebula";
-            gthemeName = 'Nebula';
+            gthemeName = 'Default Dark+';
             obj["workbench.colorTheme"] = gthemeName;
             // console.log('default: ' + obj["workbench.colorTheme"]);
             // obj["workbench.colorTheme"] = themeName;
@@ -88,7 +88,7 @@ function activate(context) {
     defaultItem.command = defaultCommand;
     context.subscriptions.push(defaultItem);
     // defaultItem.tooltip = 'Use Default Dark+ Theme';
-    defaultItem.tooltip = 'Use Nebula';
+    defaultItem.tooltip = 'Default Theme';
     defaultItem.text = '$(reply)';
     defaultItem.show();
     // save current theme to likeTheme
@@ -99,18 +99,15 @@ function activate(context) {
             obj["workbench.colorTheme"] = gthemeName;
             // console.log('like: ' + obj["workbench.colorTheme"]);
             let curTheme = gthemeName;
-            console.log(curTheme);
+            // console.log(curTheme);
             if (likeTheme.indexOf(curTheme) > -1) {
-                // console.log("in");
-                // console.log(likeTheme);
-                vscode.window.showInformationMessage('Already liked ' + curTheme);
+                vscode.window.showInformationMessage('Already liked "' + curTheme + '"');
             }
             else {
-                // console.log("not in");
                 likeTheme.push(curTheme);
-                vscode.window.showInformationMessage('Like ' + curTheme);
-                // console.log(likeTheme);
+                vscode.window.showInformationMessage('Like "' + curTheme + '"');
             }
+            console.log(likeTheme);
             var jsonContent = JSON.stringify(obj, null, 4);
             vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new util_1.TextEncoder().encode(jsonContent));
         });
@@ -120,8 +117,29 @@ function activate(context) {
     likeItem.command = likeCommand;
     context.subscriptions.push(likeItem);
     likeItem.tooltip = 'Like this Theme';
-    likeItem.text = '$(heart)';
+    likeItem.text = '$(bookmark)';
     likeItem.show();
+    // random theme in likeTheme
+    const randlikeCommand = 'themerec.randLike';
+    context.subscriptions.push(vscode.commands.registerCommand(randlikeCommand, () => {
+        vscode.workspace.openTextDocument(jsonUri).then((document) => {
+            let obj = JSON.parse(document.getText());
+            const random = Math.floor(Math.random() * likeTheme.length);
+            gthemeName = likeTheme[random];
+            obj["workbench.colorTheme"] = gthemeName;
+            console.log('randlike: print likeTheme = ');
+            console.log(likeTheme);
+            var jsonContent = JSON.stringify(obj, null, 4);
+            vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new util_1.TextEncoder().encode(jsonContent));
+        });
+    }));
+    // create status bar item, rand theme in liked themes
+    randLikeItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
+    randLikeItem.command = randlikeCommand;
+    context.subscriptions.push(randLikeItem);
+    randLikeItem.tooltip = 'Random in Liked Themes';
+    randLikeItem.text = '$(heart)';
+    randLikeItem.show();
     // rand by click
     // if (vscode.workspace.workspaceFolders) {
     // 	vscode.window.showInformationMessage('Roll a dice?', 'Try', 'Pass').then(selection => {
