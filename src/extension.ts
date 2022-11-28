@@ -52,7 +52,9 @@ export function activate(context: vscode.ExtensionContext) {
 							"Solarized Light", "Default High Contrast", "Kimbie Dark", 
 							"Winter is Coming (Light)", "Winter is Coming (Dark Blue)", "Winter is Coming (Dark Black)",
 						    "One Monokai", "Palenight Theme", "Palenight Theme", "Panda Syntax", "Eva Dark", 
-						    "Omni", 
+						    "Omni", "2077", "JellyFish", "Aura Dark", "Aura Soft Dark", "Tinacious Design", 
+							"Blueberry dark theme", "Iceberg", "Cute", "merko's green theme", 
+							"Luvia Theme", "1987", "Sublime Material Theme - Dark", "Nebula", 
 							"Slack Theme Work Hard", "Slack Theme Dark Mode", "Slack Theme Aubergine Dark", "Slack Theme Monument",
 							"Gruvbox Dark Hard", "Gruvbox Dark Soft", "Gruvbox Dark Medium", 
 							"Gruvbox Light Hard", "Gruvbox Light Soft", "Gruvbox Light Medium"];
