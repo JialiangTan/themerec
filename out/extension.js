@@ -4,8 +4,8 @@ exports.deactivate = exports.activate = void 0;
 const vscode = require("vscode");
 const util_1 = require("util");
 const { performance } = require('perf_hooks');
-let myStatusBarItem;
-let myStatusBarItem2;
+let randItem;
+let defaultItem;
 async function fileExist(fileUri) {
     try {
         await vscode.workspace.fs.stat(fileUri);
@@ -30,7 +30,6 @@ function activate(context) {
     const randCommand = 'themerec.helloWorld';
     let disposable = vscode.commands.registerCommand(randCommand, () => {
         // vscode.window.showInformationMessage('Roll a dice?', 'Try', 'Pass').then(selection => {});
-        // default button
         // collect human response
         // no repeated appearance
         // like array
@@ -39,9 +38,15 @@ function activate(context) {
         vscode.workspace.openTextDocument(jsonUri).then((document) => {
             let text = document.getText();
             let obj = JSON.parse(text);
-            const themeName = ["Abyss", "Quiet Light", "Horizon", "Darcula",
+            const themeName = ["Abyss", "Atom One Dark", "Quiet Light", "Horizon", "Darcula",
                 "Solarized Dark", "Default Dark+", "Red", "Tomorrow Night Blue",
-                "Solarized Light", "Default High Contrast", "Kimbie Dark"];
+                "Solarized Light", "Default High Contrast", "Kimbie Dark",
+                "Winter is Coming (Light)", "Winter is Coming (Dark Blue)", "Winter is Coming (Dark Black)",
+                "One Monokai", "Palenight Theme", "Palenight Theme", "Panda Syntax", "Eva Dark",
+                "Omni",
+                "Slack Theme Work Hard", "Slack Theme Dark Mode", "Slack Theme Aubergine Dark", "Slack Theme Monument",
+                "Gruvbox Dark Hard", "Gruvbox Dark Soft", "Gruvbox Dark Medium",
+                "Gruvbox Light Hard", "Gruvbox Light Soft", "Gruvbox Light Medium"];
             const random = Math.floor(Math.random() * themeName.length);
             obj["workbench.colorTheme"] = themeName[random];
             vscode.window.showInformationMessage('Current theme is: ' + themeName[random]);
@@ -52,12 +57,12 @@ function activate(context) {
     });
     context.subscriptions.push(disposable);
     // create status bar item, rand theme by click jersey icon
-    myStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
-    myStatusBarItem.command = randCommand;
-    context.subscriptions.push(myStatusBarItem);
-    myStatusBarItem.tooltip = 'Random A Theme';
-    myStatusBarItem.text = '$(jersey)';
-    myStatusBarItem.show();
+    randItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
+    randItem.command = randCommand;
+    context.subscriptions.push(randItem);
+    randItem.tooltip = 'Random Theme';
+    randItem.text = '$(jersey)';
+    randItem.show();
     // change default dark theme
     const defaultCommand = 'themerec.default';
     context.subscriptions.push(vscode.commands.registerCommand(defaultCommand, () => {
@@ -73,12 +78,12 @@ function activate(context) {
         });
     }));
     // create status bar item, apply default theme by click clock icon
-    myStatusBarItem2 = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
-    myStatusBarItem2.command = defaultCommand;
-    context.subscriptions.push(myStatusBarItem2);
-    myStatusBarItem2.tooltip = 'Use Default Dark+ Theme';
-    myStatusBarItem2.text = '$(clock)';
-    myStatusBarItem2.show();
+    defaultItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
+    defaultItem.command = defaultCommand;
+    context.subscriptions.push(defaultItem);
+    defaultItem.tooltip = 'Use Default Dark+ Theme';
+    defaultItem.text = '$(clock)';
+    defaultItem.show();
     // rand by click
     // if (vscode.workspace.workspaceFolders) {
     // 	vscode.window.showInformationMessage('Roll a dice?', 'Try', 'Pass').then(selection => {
