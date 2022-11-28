@@ -11,6 +11,7 @@ let defaultItem: vscode.StatusBarItem;
 let likeItem: vscode.StatusBarItem;
 let jsonUri = vscode.Uri.file('/Users/jialiangtan/Library/ApplicationSupport/Code/User/settings.json');
 let likeTheme: string[] = [];
+let gthemeName:string = '';
 
 
 // async function fileExist(fileUri: vscode.Uri) {
@@ -45,7 +46,7 @@ export function activate(context: vscode.ExtensionContext) {
 		// no repeated appearance
 		vscode.workspace.openTextDocument(jsonUri).then((document) => {
 			let obj = JSON.parse(document.getText());
-			const themeName = ['Abyss', 'Atom One Dark', 'Quiet Light', 'Horizon", "Darcula', 
+			const themeName = ['Abyss', 'Atom One Dark', 'Quiet Light', 'Horizon', 'Darcula', 
 							'Solarized Dark', 'Default Dark+', 'Red', 'Tomorrow Night Blue',
 							'Solarized Light', 'Default High Contrast', 'Kimbie Dark', 
 							'Winter is Coming (Light)', 'Winter is Coming (Dark Blue)', 'Winter is Coming (Dark Black)',
@@ -57,7 +58,10 @@ export function activate(context: vscode.ExtensionContext) {
 							'Gruvbox Dark Hard', 'Gruvbox Dark Soft', 'Gruvbox Dark Medium', 
 							'Gruvbox Light Hard', 'Gruvbox Light Soft', 'Gruvbox Light Medium'];
 			const random = Math.floor(Math.random() * themeName.length);
-			obj["workbench.colorTheme"] = themeName[random];
+			gthemeName = themeName[random];
+			obj["workbench.colorTheme"] = gthemeName;
+			// console.log('rand: ' + obj["workbench.colorTheme"]);
+			// obj["workbench.colorTheme"] = themeName[random];
 			// vscode.window.showInformationMessage('Current theme is: ' + themeName[random]);
 			
 			var jsonContent = JSON.stringify(obj, null, 4);
@@ -84,8 +88,11 @@ export function activate(context: vscode.ExtensionContext) {
 			vscode.workspace.openTextDocument(jsonUri).then((document) => {
 				let obj = JSON.parse(document.getText());
 				// const themeName = "Default Dark+";
-				const themeName = "Nebula";
-				obj["workbench.colorTheme"] = themeName;
+				// const themeName = "Nebula";
+				gthemeName = 'Nebula';
+				obj["workbench.colorTheme"] = gthemeName;
+				// console.log('default: ' + obj["workbench.colorTheme"]);
+				// obj["workbench.colorTheme"] = themeName;
 				
 				var jsonContent = JSON.stringify(obj, null, 4);
 				vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new TextEncoder().encode(jsonContent));
@@ -108,19 +115,30 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.commands.registerCommand(likeCommand, () => {
 			vscode.workspace.openTextDocument(jsonUri).then((document) => {
 				let obj = JSON.parse(document.getText());
-				const curTheme = obj["workbench.colorTheme"];
-				// vscode.window.showInformationMessage('Like theme: ' + themeName);
+				obj["workbench.colorTheme"] = gthemeName;
+				// console.log('like: ' + obj["workbench.colorTheme"]);
+
+				let curTheme = gthemeName;
+				console.log(curTheme);
+
 				if (likeTheme.indexOf(curTheme) > -1) {
-					console.log("in");
-					console.log(likeTheme);
+					// console.log("in");
+					// console.log(likeTheme);
 					vscode.window.showInformationMessage('Already liked ' + curTheme);
 			    } else {
-					console.log("not in");
+					// console.log("not in");
 					likeTheme.push(curTheme);
 					vscode.window.showInformationMessage('Like ' + curTheme);
-					console.log(likeTheme);
+					// console.log(likeTheme);
 				}
+				
+				var jsonContent = JSON.stringify(obj, null, 4);
+				vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new TextEncoder().encode(jsonContent));
+
+			
 			});
+			
+			
 		
 		})
 	);
