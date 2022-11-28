@@ -33,7 +33,7 @@ function activate(context) {
     console.log('Congratulations, your extension "themeRec" is now active!');
     const randCommand = 'themerec.randTheme';
     let disposable = vscode.commands.registerCommand(randCommand, () => {
-        // vscode.window.showInformationMessage('Roll a dice?', 'Try', 'Pass').then(selection => {});
+        // TODO:
         // collect human response
         // no repeated appearance
         vscode.workspace.openTextDocument(jsonUri).then((document) => {
@@ -55,39 +55,36 @@ function activate(context) {
             // console.log('rand: ' + obj["workbench.colorTheme"]);
             // obj["workbench.colorTheme"] = themeName[random];
             // vscode.window.showInformationMessage('Current theme is: ' + themeName[random]);
+            vscode.window.setStatusBarMessage(gthemeName);
             var jsonContent = JSON.stringify(obj, null, 4);
             vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new util_1.TextEncoder().encode(jsonContent));
         });
     });
     context.subscriptions.push(disposable);
-    // create status bar item, apply a random theme 
+    // create a status bar click event
     randItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
     randItem.command = randCommand;
     context.subscriptions.push(randItem);
     randItem.tooltip = 'Random Theme';
-    // randItem.text = '$(jersey)';
     randItem.text = '$(refresh)';
     randItem.show();
     // change default dark theme
     const defaultCommand = 'themerec.defaultTheme';
     context.subscriptions.push(vscode.commands.registerCommand(defaultCommand, () => {
-        // vscode.window.showInformationMessage('Use default theme');
         vscode.workspace.openTextDocument(jsonUri).then((document) => {
             let obj = JSON.parse(document.getText());
-            // const themeName = "Default Dark+";
             gthemeName = 'Default Dark+';
             obj["workbench.colorTheme"] = gthemeName;
             // console.log('default: ' + obj["workbench.colorTheme"]);
-            // obj["workbench.colorTheme"] = themeName;
+            vscode.window.setStatusBarMessage('Default Dark+');
             var jsonContent = JSON.stringify(obj, null, 4);
             vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new util_1.TextEncoder().encode(jsonContent));
         });
     }));
-    // create status bar item, apply default theme
+    // create a status bar click event
     defaultItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
     defaultItem.command = defaultCommand;
     context.subscriptions.push(defaultItem);
-    // defaultItem.tooltip = 'Use Default Dark+ Theme';
     defaultItem.tooltip = 'Default Theme';
     defaultItem.text = '$(reply)';
     defaultItem.show();
@@ -107,12 +104,12 @@ function activate(context) {
                 likeTheme.push(curTheme);
                 vscode.window.showInformationMessage('Like "' + curTheme + '"');
             }
-            console.log(likeTheme);
+            // console.log(likeTheme);
             var jsonContent = JSON.stringify(obj, null, 4);
             vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new util_1.TextEncoder().encode(jsonContent));
         });
     }));
-    // create status bar item, save current theme 
+    // create a status bar click event
     likeItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
     likeItem.command = likeCommand;
     context.subscriptions.push(likeItem);
@@ -127,13 +124,13 @@ function activate(context) {
             const random = Math.floor(Math.random() * likeTheme.length);
             gthemeName = likeTheme[random];
             obj["workbench.colorTheme"] = gthemeName;
-            console.log('randlike: print likeTheme = ');
-            console.log(likeTheme);
+            // console.log('randlike: print likeTheme = ');
+            // console.log(likeTheme);
             var jsonContent = JSON.stringify(obj, null, 4);
             vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new util_1.TextEncoder().encode(jsonContent));
         });
     }));
-    // create status bar item, rand theme in liked themes
+    // create a status bar click event
     randLikeItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
     randLikeItem.command = randlikeCommand;
     context.subscriptions.push(randLikeItem);
