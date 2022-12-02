@@ -43,6 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
 		// TODO:
 		// collect human response
 		// no repeated appearance
+		// read likeTheme when activate, should not be emitted
 		vscode.workspace.openTextDocument(jsonUri).then((document) => {
 			let obj = JSON.parse(document.getText());
 			const themeName = ['Abyss', 'Atom One Dark', 'Quiet Light', 'Horizon', 'Darcula', 
@@ -50,7 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
 							'Solarized Light', 'Default High Contrast', 'Kimbie Dark', 
 							'Winter is Coming (Light)', 'Winter is Coming (Dark Blue)', 'Winter is Coming (Dark Black)',
 						    'One Monokai', 'Palenight Theme', 'Palenight Theme', 'Panda Syntax", "Eva Dark', 
-						    'Omni", "2077', 'JellyFish', 'Aura Dark', 'Aura Soft Dark', 'Tinacious Design', 
+						    'Omni', '2077', 'JellyFish', 'Aura Dark', 'Aura Soft Dark', 'Tinacious Design', 
 							'Blueberry dark theme', 'Iceberg', 'Cute', "merko's green theme", 
 							'Luvia Theme', '1987', 'Sublime Material Theme - Dark', 'Nebula', 
 							'Slack Theme Work Hard', 'Slack Theme Dark Mode', 'Slack Theme Aubergine Dark', 'Slack Theme Monument',
@@ -62,7 +63,7 @@ export function activate(context: vscode.ExtensionContext) {
 			// console.log('rand: ' + obj["workbench.colorTheme"]);
 			// obj["workbench.colorTheme"] = themeName[random];
 			// vscode.window.showInformationMessage('Current theme is: ' + themeName[random]);
-			vscode.window.setStatusBarMessage(gthemeName);
+			vscode.window.setStatusBarMessage(gthemeName, 10000);
 
 			var jsonContent = JSON.stringify(obj, null, 4);
 			vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new TextEncoder().encode(jsonContent));
@@ -86,7 +87,7 @@ export function activate(context: vscode.ExtensionContext) {
 				gthemeName = 'Default Dark+';
 				obj["workbench.colorTheme"] = gthemeName;
 				// console.log('default: ' + obj["workbench.colorTheme"]);
-				vscode.window.setStatusBarMessage('Default Dark+');
+				vscode.window.setStatusBarMessage('Default Dark+', 10000);
 				
 				var jsonContent = JSON.stringify(obj, null, 4);
 				vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new TextEncoder().encode(jsonContent));
@@ -130,7 +131,7 @@ export function activate(context: vscode.ExtensionContext) {
 	likeItem.command = likeCommand;
 	context.subscriptions.push(likeItem);
 	likeItem.tooltip = 'Like this Theme';
-	likeItem.text = '$(bookmark)';
+	likeItem.text = '$(pass)';
 	likeItem.show();
 
 
@@ -156,7 +157,7 @@ export function activate(context: vscode.ExtensionContext) {
 	randLikeItem.command = randlikeCommand;
 	context.subscriptions.push(randLikeItem);
 	randLikeItem.tooltip = 'Random in Liked Themes';
-	randLikeItem.text = '$(heart)';
+	randLikeItem.text = '$(pass-filled)';
 	randLikeItem.show();
 
 
