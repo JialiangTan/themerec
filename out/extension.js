@@ -4,11 +4,14 @@ exports.deactivate = exports.activate = void 0;
 const vscode = require("vscode");
 const util_1 = require("util");
 const { performance } = require('perf_hooks');
+const os = require('os');
+// macOS
+let jsonUri = vscode.Uri.file(os.homedir() + '/Library/ApplicationSupport/Code/User/settings.json');
 let randItem;
 let defaultItem;
 let likeItem;
 let randLikeItem;
-let jsonUri = vscode.Uri.file('/Users/jialiangtan/Library/ApplicationSupport/Code/User/settings.json');
+// let jsonUri = vscode.Uri.file('/Users/jialiangtan/Library/ApplicationSupport/Code/User/settings.json');
 let likeTheme = [];
 let gthemeName = '';
 // async function fileExist(fileUri: vscode.Uri) {

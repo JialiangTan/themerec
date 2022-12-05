@@ -4,15 +4,21 @@ import { TextDecoder, TextEncoder } from 'util';
 import { json } from 'stream/consumers';
 import { privateEncrypt } from 'crypto';
 import * as fs from 'fs';
+import { homedir } from 'os';
 const { performance } = require('perf_hooks');
+const os = require('os');
+// macOS
+let jsonUri = vscode.Uri.file(os.homedir() + '/Library/ApplicationSupport/Code/User/settings.json');
 
 let randItem: vscode.StatusBarItem;
 let defaultItem: vscode.StatusBarItem;
 let likeItem: vscode.StatusBarItem;
 let randLikeItem: vscode.StatusBarItem;
-let jsonUri = vscode.Uri.file('/Users/jialiangtan/Library/ApplicationSupport/Code/User/settings.json');
+// let jsonUri = vscode.Uri.file('/Users/jialiangtan/Library/ApplicationSupport/Code/User/settings.json');
 let likeTheme: string[] = [];
 let gthemeName:string = '';
+
+
 
 // async function fileExist(fileUri: vscode.Uri) {
 // 	try {
@@ -34,11 +40,13 @@ let gthemeName:string = '';
 // 	}
 // }
 
+
 export function activate(context: vscode.ExtensionContext) {
 	
 	console.log('Congratulations, your extension "themeRec" is now active!');
-
+	
 	const randCommand = 'themerec.randTheme';
+	
 	let disposable = vscode.commands.registerCommand(randCommand, () => {
 		// TODO:
 		// collect human response
