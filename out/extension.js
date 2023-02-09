@@ -12,14 +12,14 @@ const path_1 = require("path");
 const { performance } = require('perf_hooks');
 const os = require('os');
 // macOS
-let jsonUri = vscode.Uri.file(os.homedir() + '/Library/ApplicationSupport/Code/User/settings.json');
+let jsonUri = vscode.Uri.file(os.homedir() + '/Library/Application\ Support/Code/User/settings.json');
 let randItem;
 let defaultItem;
 let likeItem;
 let randLikeItem;
 // let jsonUri = vscode.Uri.file('/Users/jialiangtan/Library/ApplicationSupport/Code/User/settings.json');
 let likeTheme = [];
-let arrayHome = vscode.Uri.file('/Users/jialiangtan/Library/ApplicationSupport/Code/User/themerec/liked.txt');
+// let arrayHome = vscode.Uri.file('/Users/jialiangtan/Library/ApplicationSupport/Code/User/themerec/liked.txt');
 let gthemeName = '';
 // async function fileExist(fileUri: vscode.Uri) {
 // 	try {
