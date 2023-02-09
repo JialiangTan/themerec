@@ -58,17 +58,18 @@ function activate(context) {
         // read likeTheme when activate, should not be emitted
         vscode.workspace.openTextDocument(jsonUri).then((document) => {
             let obj = JSON.parse(document.getText());
-            const themeName = ['Abyss', 'Atom One Dark', 'Quiet Light', 'Horizon', 'Darcula',
-                'Solarized Dark', 'Default Dark+', 'Red', 'Tomorrow Night Blue',
-                'Solarized Light', 'Default High Contrast', 'Kimbie Dark',
-                'Winter is Coming (Light)', 'Winter is Coming (Dark Blue)', 'Winter is Coming (Dark Black)',
-                'One Monokai', 'Palenight Theme', 'Palenight Theme', 'Panda Syntax", "Eva Dark',
-                'Omni', '2077', 'JellyFish', 'Aura Dark', 'Aura Soft Dark', 'Tinacious Design',
-                'Blueberry dark theme', 'Iceberg', 'Cute', "merko's green theme",
-                'Luvia Theme', '1987', 'Sublime Material Theme - Dark', 'Nebula',
-                'Slack Theme Work Hard', 'Slack Theme Dark Mode', 'Slack Theme Aubergine Dark', 'Slack Theme Monument',
-                'Gruvbox Dark Hard', 'Gruvbox Dark Soft', 'Gruvbox Dark Medium',
-                'Gruvbox Light Hard', 'Gruvbox Light Soft', 'Gruvbox Light Medium'];
+            const themeName = ['1987', '2077', 'Iceberg', 'Visual Studio Dark'];
+            // const themeName = ['Abyss', 'Atom One Dark', 'Quiet Light', 'Horizon', 'Darcula', 
+            // 				'Solarized Dark', 'Default Dark+', 'Red', 'Tomorrow Night Blue',
+            // 				'Solarized Light', 'Default High Contrast', 'Kimbie Dark', 
+            // 				'Winter is Coming (Light)', 'Winter is Coming (Dark Blue)', 'Winter is Coming (Dark Black)',
+            // 			    'One Monokai', 'Palenight Theme', 'Palenight Theme', 'Panda Syntax", "Eva Dark', 
+            // 			    'Omni', '2077', 'JellyFish', 'Aura Dark', 'Aura Soft Dark', 'Tinacious Design', 
+            // 				'Blueberry dark theme', 'Iceberg', 'Cute', "merko's green theme", 
+            // 				'Luvia Theme', '1987', 'Sublime Material Theme - Dark', 'Nebula', 
+            // 				'Slack Theme Work Hard', 'Slack Theme Dark Mode', 'Slack Theme Aubergine Dark', 'Slack Theme Monument',
+            // 				'Gruvbox Dark Hard', 'Gruvbox Dark Soft', 'Gruvbox Dark Medium', 
+            // 				'Gruvbox Light Hard', 'Gruvbox Light Soft', 'Gruvbox Light Medium'];
             const random = Math.floor(Math.random() * themeName.length);
             gthemeName = themeName[random];
             obj["workbench.colorTheme"] = gthemeName;
@@ -93,10 +94,10 @@ function activate(context) {
     context.subscriptions.push(vscode.commands.registerCommand(defaultCommand, () => {
         vscode.workspace.openTextDocument(jsonUri).then((document) => {
             let obj = JSON.parse(document.getText());
-            gthemeName = 'Default Dark+';
+            gthemeName = 'Visual Studio Dark';
             obj["workbench.colorTheme"] = gthemeName;
             // console.log('default: ' + obj["workbench.colorTheme"]);
-            vscode.window.setStatusBarMessage('Default Dark+', 10000);
+            vscode.window.setStatusBarMessage('Visual Studio Dark', 10000);
             var jsonContent = JSON.stringify(obj, null, 4);
             vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new util_1.TextEncoder().encode(jsonContent));
         });
