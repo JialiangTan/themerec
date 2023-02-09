@@ -3,6 +3,11 @@
   "displayName": "ThemeRec",
   "description": "Theme Recommendation",
   "version": "0.0.1",
+  "publisher": "jtan",
+  "author": {
+    "name": "Jialiang Tan",
+    "email": "jtan02@wm.edu"
+  },
   "engines": {
     "vscode": "^1.73.0"
   },
