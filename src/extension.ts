@@ -1,10 +1,13 @@
 import * as vscode from 'vscode';
-import { ProgressLocation} from 'vscode';
+// import { ProgressLocation} from 'vscode';
 import { TextDecoder, TextEncoder } from 'util';
-import { json } from 'stream/consumers';
-import { privateEncrypt } from 'crypto';
-import * as fs from 'fs';
-import { homedir } from 'os';
+import { readFileSync, writeFileSync } from 'fs';
+import { join } from 'path';
+import { AsyncLocalStorage } from 'async_hooks';
+import path = require('path');
+// import { json } from 'stream/consumers';
+// import { privateEncrypt } from 'crypto';
+// import * as fs from 'fs';
 const { performance } = require('perf_hooks');
 const os = require('os');
 // macOS
@@ -16,9 +19,8 @@ let likeItem: vscode.StatusBarItem;
 let randLikeItem: vscode.StatusBarItem;
 // let jsonUri = vscode.Uri.file('/Users/jialiangtan/Library/ApplicationSupport/Code/User/settings.json');
 let likeTheme: string[] = [];
+let arrayHome = vscode.Uri.file('/Users/jialiangtan/Library/ApplicationSupport/Code/User/themerec/liked.txt');
 let gthemeName:string = '';
-
-
 
 // async function fileExist(fileUri: vscode.Uri) {
 // 	try {
@@ -41,10 +43,20 @@ let gthemeName:string = '';
 // }
 
 
+function syncWriteFile (fileName:string, data:any) {
+	writeFileSync(join(__dirname, fileName), data, {
+		flag: 'w',
+	});
+	const content = readFileSync(join(__dirname, fileName), 'utf-8');
+	console.log(content);
+	// console.log(__dirname);
+	return content;
+}
+
+
 export function activate(context: vscode.ExtensionContext) {
-	
 	console.log('Congratulations, your extension "themeRec" is now active!');
-	
+
 	const randCommand = 'themerec.randTheme';
 	
 	let disposable = vscode.commands.registerCommand(randCommand, () => {
@@ -112,61 +124,66 @@ export function activate(context: vscode.ExtensionContext) {
 
 	
 	// save current theme to likeTheme
-	const likeCommand = 'themerec.likeTheme';
-	context.subscriptions.push(
-		vscode.commands.registerCommand(likeCommand, () => {
-			vscode.workspace.openTextDocument(jsonUri).then((document) => {
-				let obj = JSON.parse(document.getText());
-				obj["workbench.colorTheme"] = gthemeName;
-				// console.log('like: ' + obj["workbench.colorTheme"]);
-				let curTheme = gthemeName;
-				// console.log(curTheme);
-				if (likeTheme.indexOf(curTheme) > -1) {
-					vscode.window.showInformationMessage('Already liked "' + curTheme + '"');
-			    } else {
-					likeTheme.push(curTheme);
-					vscode.window.showInformationMessage('Like "' + curTheme + '"');
-				}
-				// console.log(likeTheme);
+	// const likeCommand = 'themerec.likeTheme';
+	// context.subscriptions.push(
+	// 	vscode.commands.registerCommand(likeCommand, () => {
+	// 		vscode.workspace.openTextDocument(jsonUri).then((document) => {
+	// 			let obj = JSON.parse(document.getText());
+	// 			obj["workbench.colorTheme"] = gthemeName;
+	// 			// console.log('like: ' + obj["workbench.colorTheme"]);
+	// 			let curTheme = gthemeName;
+	// 			// console.log(curTheme);
+	// 			if (likeTheme.indexOf(curTheme) > -1) {
+	// 				vscode.window.showInformationMessage('Already liked "' + curTheme + '"');
+	// 		    } else {
+	// 				likeTheme.push(curTheme);
+	// 				vscode.window.showInformationMessage('Like "' + curTheme + '"');
+	// 			}
+	// 			// console.log(likeTheme);
 
-				var jsonContent = JSON.stringify(obj, null, 4);
-				vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new TextEncoder().encode(jsonContent));
-			});
-		})
-	);
+	// 			var jsonContent = JSON.stringify(obj, null, 4);
+	// 			vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new TextEncoder().encode(jsonContent));
+				
+	// 			syncWriteFile('./liked.txt', likeTheme.toString());
+
+	// 		});
+	// 	})
+		
+	// );
+	
 	// create a status bar click event
-	likeItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
-	likeItem.command = likeCommand;
-	context.subscriptions.push(likeItem);
-	likeItem.tooltip = 'Like this Theme';
-	likeItem.text = '$(pass)';
-	likeItem.show();
+	// likeItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
+	// likeItem.command = likeCommand;
+	// context.subscriptions.push(likeItem);
+	// likeItem.tooltip = 'Like this Theme';
+	// likeItem.text = '$(pass)';
+	// likeItem.show();
 
 
 	// random theme in likeTheme
-	const randlikeCommand = 'themerec.randLike';
-	context.subscriptions.push(
-		vscode.commands.registerCommand(randlikeCommand, () => {
-			vscode.workspace.openTextDocument(jsonUri).then( (document) => {
-				let obj = JSON.parse(document.getText());
-				const random = Math.floor(Math.random() * likeTheme.length);
-				gthemeName = likeTheme[random];
-				obj["workbench.colorTheme"] = gthemeName;
-				// console.log('randlike: print likeTheme = ');
-				// console.log(likeTheme);
+	// const randlikeCommand = 'themerec.randLike';
+	// context.subscriptions.push(
+	// 	vscode.commands.registerCommand(randlikeCommand, () => {
+	// 		vscode.workspace.openTextDocument(jsonUri).then( (document) => {
+	// 			let obj = JSON.parse(document.getText());
+	// 			const random = Math.floor(Math.random() * likeTheme.length);
+	// 			gthemeName = likeTheme[random];
+	// 			obj["workbench.colorTheme"] = gthemeName;
+	// 			// console.log('randlike: print likeTheme = ');
+	// 			// console.log(likeTheme);
 
-				var jsonContent = JSON.stringify(obj, null, 4);
-				vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new TextEncoder().encode(jsonContent));
-			});
-		})
-	);
+	// 			var jsonContent = JSON.stringify(obj, null, 4);
+	// 			vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new TextEncoder().encode(jsonContent));
+	// 		});
+	// 	})
+	// );
 	// create a status bar click event
-	randLikeItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
-	randLikeItem.command = randlikeCommand;
-	context.subscriptions.push(randLikeItem);
-	randLikeItem.tooltip = 'Random in Liked Themes';
-	randLikeItem.text = '$(pass-filled)';
-	randLikeItem.show();
+	// randLikeItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
+	// randLikeItem.command = randlikeCommand;
+	// context.subscriptions.push(randLikeItem);
+	// randLikeItem.tooltip = 'Random in Liked Themes';
+	// randLikeItem.text = '$(pass-filled)';
+	// randLikeItem.show();
 
 
 	// rand by click
@@ -231,11 +248,12 @@ export function activate(context: vscode.ExtensionContext) {
 
 }
 
-// function updateStatusBarItem():void {
-// 	myStatusBarItem.text = 'xxx';
-// 	myStatusBarItem.show();
-// }
 
-export function deactivate() {}
+
+
+export function deactivate() {
+	// let arrPath = vscode.Uri.file(os.homedir() + '/Library/ApplicationSupport/Code/User/therec/arr');
+	
+}
 
 
