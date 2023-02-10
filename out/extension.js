@@ -58,18 +58,19 @@ function activate(context) {
         // read likeTheme when activate, should not be emitted
         vscode.workspace.openTextDocument(jsonUri).then((document) => {
             let obj = JSON.parse(document.getText());
-            const themeName = ['1987', '2077', 'Iceberg', 'Visual Studio Dark'];
-            // const themeName = ['Abyss', 'Atom One Dark', 'Quiet Light', 'Horizon', 'Darcula', 
-            // 				'Solarized Dark', 'Default Dark+', 'Red', 'Tomorrow Night Blue',
-            // 				'Solarized Light', 'Default High Contrast', 'Kimbie Dark', 
-            // 				'Winter is Coming (Light)', 'Winter is Coming (Dark Blue)', 'Winter is Coming (Dark Black)',
-            // 			    'One Monokai', 'Palenight Theme', 'Palenight Theme', 'Panda Syntax", "Eva Dark', 
-            // 			    'Omni', '2077', 'JellyFish', 'Aura Dark', 'Aura Soft Dark', 'Tinacious Design', 
-            // 				'Blueberry dark theme', 'Iceberg', 'Cute', "merko's green theme", 
-            // 				'Luvia Theme', '1987', 'Sublime Material Theme - Dark', 'Nebula', 
-            // 				'Slack Theme Work Hard', 'Slack Theme Dark Mode', 'Slack Theme Aubergine Dark', 'Slack Theme Monument',
-            // 				'Gruvbox Dark Hard', 'Gruvbox Dark Soft', 'Gruvbox Dark Medium', 
-            // 				'Gruvbox Light Hard', 'Gruvbox Light Soft', 'Gruvbox Light Medium'];
+            // const themeName = ['1987', '2077', 'Iceberg', 'Visual Studio Dark'];
+            const themeName = ['Atom One Dark', 'Horizon', '1987', 'One Monokai', 'Nebula',
+                'Iceberg', 'Aura Dark', 'Aura Soft Dark', '2077',
+                'Slack Theme Work Hard', 'Slack Theme Dark Mode', 'Slack Theme Aubergine Dark', 'Slack Theme Monument',
+                'Eva Dark', 'Abyss',
+                'Gruvbox Dark Hard', 'Gruvbox Dark Soft', 'Gruvbox Dark Medium',
+                'Gruvbox Light Hard', 'Gruvbox Light Soft', 'Gruvbox Light Medium',
+                'Winter is Coming (Light)', 'Winter is Coming (Dark Blue)', 'Winter is Coming (Dark Black)',
+                'Luvia Theme', "merko's green theme", 'JellyFish', 'Blueberry dark theme',
+                'Omni', 'Darcula', 'Panda Syntax', 'Cute', 'Cobalt2',
+                'Palenight Theme', 'Palenight Theme', 'Red', 'Kimbie Dark', 'Tomorrow Night Blue',
+                'Solarized Dark', 'Solarized Light', 'Default High Contrast', 'Quieter Dark',
+                'quietLight-plus-theme', 'Sublime Material Theme - Dark', 'Sublime Material Theme - Light'];
             const random = Math.floor(Math.random() * themeName.length);
             gthemeName = themeName[random];
             obj["workbench.colorTheme"] = gthemeName;
