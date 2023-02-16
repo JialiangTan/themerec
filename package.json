@@ -1,7 +1,7 @@
 {
   "name": "themerec",
-  "displayName": "Theme Recomendation",
-  "description": "Random Your Theme",
+  "displayName": "themeRec",
+  "description": "Recommend A Random Theme",
   "version": "0.0.6",
   "publisher": "jtan",
   "icon": "clothing.png",
