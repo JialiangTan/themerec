@@ -1,9 +1,10 @@
 {
-  "name": "rantheme",
-  "displayName": "Random Theme",
+  "name": "themerec",
+  "displayName": "Theme Recomendation",
   "description": "Random Your Theme",
-  "version": "0.0.5",
+  "version": "0.0.4",
   "publisher": "jtan",
+  "icon": "clothing.png",
   "author": {
     "name": "Jialiang Tan",
     "email": "jtan02@wm.edu"
