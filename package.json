@@ -24,27 +24,6 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
-    "viewsContainers": {
-      "activitybar": [
-        {
-          "id": "theme-explorer",
-          "title": "Theme Explorer",
-          "icon": "resources/jersey.svg"
-        }
-      ]
-    },
-    "views": {
-      "theme-explorer": [
-        {
-          "id": "package-dependencies",
-          "name": "Favorate"
-        },
-        {
-          "id": "package-outline",
-          "name": "Installed"
-        }
-      ]
-    },
     "commands": [
       {
         "command": "themerec.randTheme",
