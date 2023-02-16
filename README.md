@@ -13,7 +13,7 @@ And click the  `back` button to get the default VS Code dark theme. :upside_down
 ## :musical_keyboard: Installation
 Prerequisite:
 
-Install ![themePack](https://marketplace.visualstudio.com/items?itemName=jtan.themepack) to get all the themes installed.
+Install [themePack](https://marketplace.visualstudio.com/items?itemName=jtan.themepack) to get all the themes installed.
 
 
 ## :bug: Issues and contributing
