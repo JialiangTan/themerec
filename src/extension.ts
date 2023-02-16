@@ -72,7 +72,6 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand(randCommand, () => {
 		// TODO:
 		// collect human response
-		// no repeated appearance
 		// read likeTheme when activate, should not be emitted
 		vscode.workspace.openTextDocument(jsonUri).then((document) => {
 			let obj = JSON.parse(document.getText());
