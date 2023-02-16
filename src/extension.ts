@@ -11,6 +11,8 @@ import path = require('path');
 const { performance } = require('perf_hooks');
 const os = require('os');
 // macOS
+// let jsonUri = vscode.Uri.file(os.homedir() + '/Library/Application\ Support/Code/User/settings.json');
+
 let jsonUri: vscode.Uri;
 
 if (window.navigator.userAgent.indexOf("Mac")!== -1){
@@ -19,6 +21,7 @@ if (window.navigator.userAgent.indexOf("Mac")!== -1){
 else{
 	jsonUri = vscode.Uri.file(os.homedir() + '/Application\ Data/Code/User/settings.json');
 }
+
 let randItem: vscode.StatusBarItem;
 let defaultItem: vscode.StatusBarItem;
 let likeItem: vscode.StatusBarItem;
