@@ -11,17 +11,18 @@ import { consumers } from 'stream';
 // import * as fs from 'fs';
 const { performance } = require('perf_hooks');
 const os = require('os');
+
 // macOS
-let jsonUri = vscode.Uri.file(os.homedir() + '/Library/Application\ Support/Code/User/settings.json');
+// let jsonUri = vscode.Uri.file(os.homedir() + '/Library/Application\ Support/Code/User/settings.json');
 
-// let jsonUri: vscode.Uri;
+let jsonUri: vscode.Uri;
 
-// if (window.navigator.userAgent.indexOf("Mac")!== -1){
-// 	jsonUri = vscode.Uri.file(os.homedir() + '/Library/Application\ Support/Code/User/settings.json');
-// }
-// else{
-// 	jsonUri = vscode.Uri.file(os.homedir() + '/Application\ Data/Code/User/settings.json');
-// }
+if (os.platform() === 'darwin'){
+	jsonUri = vscode.Uri.file(os.homedir() + '/Library/Application\ Support/Code/User/settings.json');
+}
+else{
+	jsonUri = vscode.Uri.file(os.homedir() + '/Application\ Data/Code/User/settings.json');
+}
 
 let randItem: vscode.StatusBarItem;
 let defaultItem: vscode.StatusBarItem;
@@ -66,6 +67,7 @@ function syncWriteFile (fileName:string, data:any) {
 
 export function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "themeRec" is now active!');
+	console.log(os.platform());
 	
 	const randCommand = 'themerec.randTheme';
 	
