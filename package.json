@@ -9,6 +9,10 @@
     "name": "Jialiang Tan",
     "email": "jtan02@wm.edu"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JialiangTan/themerec.git"
+  },
   "engines": {
     "vscode": "^1.73.0"
   },
