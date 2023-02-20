@@ -96,7 +96,7 @@ export function activate(context: vscode.ExtensionContext) {
 			// console.log('rand: ' + obj["workbench.colorTheme"]);
 			// obj["workbench.colorTheme"] = themeName[random];
 			// vscode.window.showInformationMessage('Current theme is: ' + themeName[random]);
-			vscode.window.setStatusBarMessage(gthemeName, 10000);
+			vscode.window.setStatusBarMessage(gthemeName, 300000);
 
 			var jsonContent = JSON.stringify(obj, null, 4);
 			vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new TextEncoder().encode(jsonContent));
@@ -107,7 +107,7 @@ export function activate(context: vscode.ExtensionContext) {
 	randItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
 	randItem.command = randCommand;
 	context.subscriptions.push(randItem);
-	randItem.tooltip = 'Random Theme';
+	randItem.tooltip = "I'm Feeling Lucky";
 	randItem.text = '$(refresh)';
 	randItem.show();
 
@@ -131,7 +131,7 @@ export function activate(context: vscode.ExtensionContext) {
 	defaultItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
 	defaultItem.command = defaultCommand;
 	context.subscriptions.push(defaultItem);
-	defaultItem.tooltip = 'Default Theme';
+	defaultItem.tooltip = 'Default';
 	defaultItem.text = '$(reply)';
 	defaultItem.show();
 
