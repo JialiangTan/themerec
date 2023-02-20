@@ -3,11 +3,13 @@
 ## :tshirt: About themeRec
 Coding never gets bored with themeRec! :partying_face:
 
-themeRec is an VS Code extension that randomly recommend and install a popular VS Code theme for you. Upon installation, you will find two icons on the left corner of your status bar. 
+ThemeRec is a VS Code extension that recommends and installs a popular VS Code theme for you. Unlike existing approaches that let users select the themes they like, ThemeRec pushes themes to users, which allows users to try more themes.
 
-Try to click the `refresh` button to surprise yourself! :tada:
+Upon installation, you will find two icons on the left corner of your status bar. 
 
-And click the  `back` button to get the default VS Code dark theme. :upside_down_face:
+Click the `refresh` button to surprise yourself! :tada:
+
+Click the  `back` button to get the default VS Code dark theme. :upside_down_face:
 
 
 ## :musical_keyboard: Installation
