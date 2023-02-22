@@ -12,14 +12,14 @@ const path_1 = require("path");
 const { performance } = require('perf_hooks');
 const os = require('os');
 // macOS
-let jsonUri = vscode.Uri.file(os.homedir() + '/Library/Application\ Support/Code/User/settings.json');
-// let jsonUri: vscode.Uri;
-// if (window.navigator.userAgent.indexOf("Mac")!== -1){
-// 	jsonUri = vscode.Uri.file(os.homedir() + '/Library/Application\ Support/Code/User/settings.json');
-// }
-// else{
-// 	jsonUri = vscode.Uri.file(os.homedir() + '/Application\ Data/Code/User/settings.json');
-// }
+// let jsonUri = vscode.Uri.file(os.homedir() + '/Library/Application\ Support/Code/User/settings.json');
+let jsonUri;
+if (os.platform() === 'darwin') {
+    jsonUri = vscode.Uri.file(os.homedir() + '/Library/Application\ Support/Code/User/settings.json');
+}
+else {
+    jsonUri = vscode.Uri.file(os.homedir() + '/Application\ Data/Code/User/settings.json');
+}
 let randItem;
 let defaultItem;
 let likeItem;
@@ -57,6 +57,7 @@ function syncWriteFile(fileName, data) {
 }
 function activate(context) {
     console.log('Congratulations, your extension "themeRec" is now active!');
+    console.log(os.platform());
     const randCommand = 'themerec.randTheme';
     let disposable = vscode.commands.registerCommand(randCommand, () => {
         // TODO:
@@ -83,7 +84,7 @@ function activate(context) {
             // console.log('rand: ' + obj["workbench.colorTheme"]);
             // obj["workbench.colorTheme"] = themeName[random];
             // vscode.window.showInformationMessage('Current theme is: ' + themeName[random]);
-            vscode.window.setStatusBarMessage(gthemeName, 10000);
+            vscode.window.setStatusBarMessage(gthemeName, 300000);
             var jsonContent = JSON.stringify(obj, null, 4);
             vscode.workspace.fs.writeFile(vscode.Uri.file(jsonUri.path), new util_1.TextEncoder().encode(jsonContent));
         });
@@ -93,7 +94,7 @@ function activate(context) {
     randItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
     randItem.command = randCommand;
     context.subscriptions.push(randItem);
-    randItem.tooltip = 'Random Theme';
+    randItem.tooltip = "I'm Feeling Lucky";
     randItem.text = '$(refresh)';
     randItem.show();
     // change default dark theme
@@ -113,7 +114,7 @@ function activate(context) {
     defaultItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
     defaultItem.command = defaultCommand;
     context.subscriptions.push(defaultItem);
-    defaultItem.tooltip = 'Default Theme';
+    defaultItem.tooltip = 'Default';
     defaultItem.text = '$(reply)';
     defaultItem.show();
     // save current theme to likeTheme

@@ -2,12 +2,16 @@
   "name": "themerec",
   "displayName": "themeRec",
   "description": "Recommend A Random Theme",
-  "version": "0.0.11",
+  "version": "0.0.13",
   "publisher": "jtan",
   "icon": "clothing.png",
   "author": {
     "name": "Jialiang Tan",
     "email": "jtan02@wm.edu"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JialiangTan/themerec.git"
   },
   "engines": {
     "vscode": "^1.73.0"
