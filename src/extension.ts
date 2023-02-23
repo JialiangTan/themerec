@@ -90,7 +90,7 @@ export function activate(context: vscode.ExtensionContext) {
 							   'Palenight Theme', 'Palenight Theme', 'Red', 'Kimbie Dark', 'Tomorrow Night Blue',
 							   'Solarized Dark',  'Solarized Light', 'Default High Contrast', 'Quieter Dark', 
 							   'quietLight-plus-theme', 'Sublime Material Theme - Dark', 'Sublime Material Theme - Light', 'Cyberpunk', 'Yonce',
-							   'Ayu', 'Nord', 'One Dark Pro', 'Dracula Official'];
+							   'Ayu', 'Nord', 'One Dark Pro'];
 			const random = Math.floor(Math.random() * themeName.length);
 			gthemeName = themeName[random];
 			obj["workbench.colorTheme"] = gthemeName;
