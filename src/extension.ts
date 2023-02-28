@@ -81,8 +81,7 @@ export function activate(context: vscode.ExtensionContext) {
 			const themeName = ['Atom One Dark', 'Horizon', '1987', 'One Monokai', 'Nebula',
 							   'Iceberg', 'Aura Dark', 'Aura Soft Dark', '2077',
 							   'Slack Theme Work Hard', 'Slack Theme Dark Mode', 'Slack Theme Aubergine Dark', 'Slack Theme Monument',
-							   'Eva Dark', 'Abyss',
-							   'Gruvbox Dark Hard', 'Gruvbox Dark Soft', 'Gruvbox Dark Medium', 
+							   'Eva Dark', 'Abyss','Gruvbox Dark Hard', 'Gruvbox Dark Soft', 'Gruvbox Dark Medium', 
 							   'Gruvbox Light Hard', 'Gruvbox Light Soft', 'Gruvbox Light Medium',
 							   'Winter is Coming (Light)', 'Winter is Coming (Dark Blue)', 'Winter is Coming (Dark Black)',
 							   'Luvia Theme', "merko's green theme", 'JellyFish', 'Blueberry dark theme',
@@ -98,7 +97,13 @@ export function activate(context: vscode.ExtensionContext) {
 							   'Mayukai Mirage','Mayukai Semantic Mirage','Mayukai Mirage Gruvbox Darktooth',
 							   'Mayukai Dark','Mayukai Mono','Mayukai Alucard','Mayukai Sunset', 'Mayukai Reversal',
 							   'Mayukai Midnight','Moonlight','Moonlight Italic', 'Kary Pro Colors － Light',
-							   'Kary Pro Colors － Dark','Black', 'Black Italic'];
+							   'Kary Pro Colors － Dark','Black', 'Black Italic','Viow Darker',
+							   'Viow Flat','Viow Light','Viow Neon','Viow Mars','Viow Arabian','Viow Arabian - Mix','Kanagawa',
+							   'Ariake Dark','Hackers Haze','City Lights','Radical','Plastic','Code Blue','Hyper Term Theme','Halcyon',
+							   'Hop Light','1337','Seti Monokai: Original','Seti Monokai: Pale Night','Seti Monokai: Royal','Seti Monokai: Dark Forest',
+							   'Seti Monokai: Space','Night Owl Black','FireFly Pro','FireFly Pro Midnight','FireFly Pro Bright',
+							   "Pop N' Lock Theme by Luxcium ✨",'Snazzy Light','Copilot Theme','Pink Cat Boo','Dark Low Contrast',
+							   'Dark Low Contrast Warm','Dark Low Contrast Cold','Dark Low Contrast Nature','Dark Low Contrast Fire','Tiny Light'];
 			const random = Math.floor(Math.random() * themeName.length);
 			gthemeName = themeName[random];
 			obj["workbench.colorTheme"] = gthemeName;
